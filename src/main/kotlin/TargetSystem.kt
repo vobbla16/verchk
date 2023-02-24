@@ -18,11 +18,11 @@ interface TargetSystem {
      * Check is the url matches this target
      * @return is url matches target
      */
-    fun check(): Boolean
+    suspend fun check(): Boolean
 
     /**
      * Get target's version
      * @return target's version presented as String
      */
-    fun version(): String
+    suspend fun version(): String
 }

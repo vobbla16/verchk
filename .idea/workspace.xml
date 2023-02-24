@@ -4,15 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33b1220d-c217-4d46-a062-5ee946a7616c" name="Changes" comment="created ConsoleTableBuilder, TargetSystem">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/utils/ConsoleSpinner.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/utils/Resource.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/utils/suspendToResourceWrapper.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="33b1220d-c217-4d46-a062-5ee946a7616c" name="Changes" comment="created Resource and suspendToResourceWrapper; playing around with ktor and coroutines">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/TargetSystem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/TargetSystem.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/targets/ConfluenceTargetImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/targets/ConfluenceTargetImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/targets/GitlabTargetImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/targets/GitlabTargetImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/targets/JenkinsTargetImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/targets/JenkinsTargetImpl.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +63,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "ktor.last.update.timestamp": "1677170455754",
+    "ktor.last.update.timestamp": "1677266621835",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -87,7 +86,16 @@
       <recent name="targets" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Kotlin.DetermineSystem_Confluence">
+    <configuration name="DetermineSystem_Confluence" type="JetRunConfigurationType">
+      <option name="MAIN_CLASS_NAME" value="MainKt" />
+      <module name="vsosh-verchk.main" />
+      <option name="PROGRAM_PARAMETERS" value="determine https://wiki.muctr.ru" />
+      <shortenClasspath name="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ShowAllTargets" type="JetRunConfigurationType">
       <option name="MAIN_CLASS_NAME" value="MainKt" />
       <module name="vsosh-verchk.main" />
@@ -97,6 +105,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Kotlin.ShowAllTargets" />
+      <item itemvalue="Kotlin.DetermineSystem_Confluence" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -107,7 +119,7 @@
       <option name="presentableId" value="Default" />
       <updated>1677090529192</updated>
       <workItem from="1677090530772" duration="16229000" />
-      <workItem from="1677237197976" duration="9847000" />
+      <workItem from="1677237197976" duration="17170000" />
     </task>
     <task id="LOCAL-00001" summary="created ConsoleTableBuilder, TargetSystem">
       <created>1677176570694</created>
@@ -116,7 +128,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677176570694</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="created Resource and suspendToResourceWrapper; playing around with ktor and coroutines">
+      <created>1677256265927</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1677256265927</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,6 +154,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="created ConsoleTableBuilder, TargetSystem" />
-    <option name="LAST_COMMIT_MESSAGE" value="created ConsoleTableBuilder, TargetSystem" />
+    <MESSAGE value="created Resource and suspendToResourceWrapper; playing around with ktor and coroutines" />
+    <option name="LAST_COMMIT_MESSAGE" value="created Resource and suspendToResourceWrapper; playing around with ktor and coroutines" />
   </component>
 </project>
