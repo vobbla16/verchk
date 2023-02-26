@@ -15,6 +15,9 @@ class ConfluenceTargetImpl(override val url: String) : TargetSystem {
     }
 
     override suspend fun version(): String {
-        return url + "1.1.1"
+        val preparedUrl = if (url.last() == '/') url.dropLast(1) else url
+
+        val jsoupDoc = Jsoup.connect("$preparedUrl/login.action").get()
+        return jsoupDoc.select("#footer-build-information").text()
     }
 }

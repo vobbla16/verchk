@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="vsosh-verchk.main:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33b1220d-c217-4d46-a062-5ee946a7616c" name="Changes" comment="created Resource and suspendToResourceWrapper; playing around with ktor and coroutines">
+    <list default="true" id="33b1220d-c217-4d46-a062-5ee946a7616c" name="Changes" comment="created `determine` subcommand; implemented check() for ConfluenceTargetImpl">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/vsosh_verchk_main_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/kotlinScripting.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/utils/MultipleLineStatus.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/TargetSystem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/TargetSystem.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/targets/ConfluenceTargetImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/targets/ConfluenceTargetImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/targets/GitlabTargetImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/targets/GitlabTargetImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/targets/JenkinsTargetImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/targets/JenkinsTargetImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/utils/ConsoleSpinner.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/utils/Resource.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/utils/suspendToResourceWrapper.kt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,11 +48,28 @@
         <option value="Kotlin Interface" />
         <option value="Kotlin Class" />
         <option value="Kotlin File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="2077e0e3-d449-40d8-8f1b-ae199cbb5606" />
+        <option name="url" value="https://github.com/vobbla16/verchk.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/kotlin/utils/MultipleLineStatus.kt" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -62,17 +88,19 @@
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "ktor.last.update.timestamp": "1677266621835",
+    "ktor.last.update.timestamp": "1677425726502",
+    "last_opened_file_path": "/home/vobbla16/IdeaProjects/vsosh-verchk/META-INF",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.09191179",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "vcs.Git",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15435795",
+    "project.structure.side.proportion": "0.18031496",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -84,6 +112,9 @@
   <component name="RecentsManager">
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
       <recent name="targets" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="utils" />
     </key>
   </component>
   <component name="RunManager" selected="Kotlin.DetermineSystem_Confluence">
@@ -119,7 +150,9 @@
       <option name="presentableId" value="Default" />
       <updated>1677090529192</updated>
       <workItem from="1677090530772" duration="16229000" />
-      <workItem from="1677237197976" duration="17170000" />
+      <workItem from="1677237197976" duration="19198000" />
+      <workItem from="1677420321817" duration="37000" />
+      <workItem from="1677425591569" duration="7266000" />
     </task>
     <task id="LOCAL-00001" summary="created ConsoleTableBuilder, TargetSystem">
       <created>1677176570694</created>
@@ -135,7 +168,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677256265927</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="created `determine` subcommand; implemented check() for ConfluenceTargetImpl">
+      <created>1677273980448</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1677273980448</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,6 +195,10 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="created ConsoleTableBuilder, TargetSystem" />
     <MESSAGE value="created Resource and suspendToResourceWrapper; playing around with ktor and coroutines" />
-    <option name="LAST_COMMIT_MESSAGE" value="created Resource and suspendToResourceWrapper; playing around with ktor and coroutines" />
+    <MESSAGE value="created `determine` subcommand; implemented check() for ConfluenceTargetImpl" />
+    <option name="LAST_COMMIT_MESSAGE" value="created `determine` subcommand; implemented check() for ConfluenceTargetImpl" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/vsosh_verchk$ShowAllTargets.ic" NAME="ShowAllTargets Coverage Results" MODIFIED="1677438937550" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

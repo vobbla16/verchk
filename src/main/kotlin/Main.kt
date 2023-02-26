@@ -8,8 +8,9 @@ import kotlinx.cli.ArgType
 import kotlinx.cli.ExperimentalCli
 import kotlinx.cli.Subcommand
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
-import utils.consoleTable
+import utils.*
 import kotlin.reflect.full.*
 
 @OptIn(ExperimentalCli::class)
@@ -45,6 +46,7 @@ fun main(args: Array<String>) {
                 }
             }
 
+            println()
             println("Possibly installed on endpoint:")
             println(table.build())
         }
@@ -57,27 +59,37 @@ fun main(args: Array<String>) {
     parser.parse(args)
 }
 
-suspend fun determineTargetSystem(url: String): List<TargetSystem> = coroutineScope {
+suspend fun determineTargetSystem(url: String) = coroutineScope {
     val impls = mutableListOf<TargetSystem>()
 
-    val asyncedImpls = mutableListOf<Deferred<Pair<TargetSystem, Boolean>>>()
+    val initialLines = mutableListOf<Line>()
+    val eventsChannel = Channel<ChangeAction>()
 
-    getAllTargets().forEach { impl ->
-        val ctor = impl.primaryConstructor!!
-        val ins = ctor.call(url) as TargetSystem
+    val allChecksJobs = mutableListOf<Job>()
 
-        asyncedImpls.add( async {
-            Pair(ins, ins.check())
-        } )
+    getAllTargets().forEachIndexed { i, target ->
+        val ins = target.primaryConstructor!!.call(url) as TargetSystem
+
+        initialLines.add(Line(Status.Spinner, "Checking ${ins.targetName}"))
+
+        allChecksJobs.add(launch {
+            val res = ins.check()
+            if (res) {
+                eventsChannel.send(ChangeAction.ChangeStatus(i, Status.Success()))
+                eventsChannel.send(ChangeAction.ChangeText(i, "Target is ${ins.targetName}"))
+                impls.add(ins)
+            } else {
+                eventsChannel.send(ChangeAction.ChangeStatus(i, Status.Error()))
+                eventsChannel.send(ChangeAction.ChangeText(i, "Target is not ${ins.targetName}"))
+            }
+        })
     }
 
-//    TODO("Fancy loading indicator (consoleSpinner)")
+    launch { MultipleLineStatus(initialLines, eventsChannel).start() }
 
-    asyncedImpls.forEach { defPair ->
-        defPair.await().let {
-            if (it.second) impls.add(it.first)
-        }
-    }
+    allChecksJobs.forEach { it.join() }
+    eventsChannel.send(ChangeAction.End)
+    eventsChannel.close()
 
-    return@coroutineScope impls.toList()
+    return@coroutineScope impls
 }
