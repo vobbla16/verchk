@@ -9,24 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33b1220d-c217-4d46-a062-5ee946a7616c" name="Changes" comment="created `determine` subcommand; implemented check() for ConfluenceTargetImpl">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/vsosh_verchk_main_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/kotlinScripting.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/utils/MultipleLineStatus.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
+    <list default="true" id="33b1220d-c217-4d46-a062-5ee946a7616c" name="Changes" comment="created and integrated fancy MultipleLineStatus engine">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/targets/ConfluenceTargetImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/targets/ConfluenceTargetImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/utils/ConsoleSpinner.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/utils/Resource.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/utils/suspendToResourceWrapper.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/utils/MultipleLineStatus.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/utils/MultipleLineStatus.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ChangesViewManager" show_ignored="true" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -90,7 +83,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "ktor.last.update.timestamp": "1677425726502",
+    "ktor.last.update.timestamp": "1677611777516",
     "last_opened_file_path": "/home/vobbla16/IdeaProjects/vsosh-verchk/META-INF",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -100,7 +93,7 @@
     "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15435795",
     "project.structure.side.proportion": "0.18031496",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "terminal",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -152,7 +145,9 @@
       <workItem from="1677090530772" duration="16229000" />
       <workItem from="1677237197976" duration="19198000" />
       <workItem from="1677420321817" duration="37000" />
-      <workItem from="1677425591569" duration="7266000" />
+      <workItem from="1677425591569" duration="7785000" />
+      <workItem from="1677514666433" duration="2592000" />
+      <workItem from="1677611669681" duration="859000" />
     </task>
     <task id="LOCAL-00001" summary="created ConsoleTableBuilder, TargetSystem">
       <created>1677176570694</created>
@@ -175,7 +170,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677273980448</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="created and integrated fancy MultipleLineStatus engine">
+      <created>1677439657388</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1677439657388</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -186,7 +188,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -196,7 +210,32 @@
     <MESSAGE value="created ConsoleTableBuilder, TargetSystem" />
     <MESSAGE value="created Resource and suspendToResourceWrapper; playing around with ktor and coroutines" />
     <MESSAGE value="created `determine` subcommand; implemented check() for ConfluenceTargetImpl" />
-    <option name="LAST_COMMIT_MESSAGE" value="created `determine` subcommand; implemented check() for ConfluenceTargetImpl" />
+    <MESSAGE value="created and integrated fancy MultipleLineStatus engine" />
+    <option name="LAST_COMMIT_MESSAGE" value="created and integrated fancy MultipleLineStatus engine" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/Main.kt</url>
+          <line>91</line>
+          <properties>
+            <option name="lambda-ordinal" value="-1" />
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/Main.kt</url>
+          <line>94</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/utils/MultipleLineStatus.kt</url>
+          <line>54</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/vsosh_verchk$ShowAllTargets.ic" NAME="ShowAllTargets Coverage Results" MODIFIED="1677438937550" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

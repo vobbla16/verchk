@@ -71,7 +71,7 @@ suspend fun determineTargetSystem(url: String) = coroutineScope {
         val ins = target.primaryConstructor!!.call(url) as TargetSystem
 
         initialLines.add(Line(Status.Spinner, "Checking ${ins.targetName}"))
-
+        
         allChecksJobs.add(launch {
             val res = ins.check()
             if (res) {
@@ -85,11 +85,11 @@ suspend fun determineTargetSystem(url: String) = coroutineScope {
         })
     }
 
-    launch { MultipleLineStatus(initialLines, eventsChannel).start() }
+    val mls = MultipleLineStatus(initialLines, eventsChannel)
+    launch { mls.start() }
 
     allChecksJobs.forEach { it.join() }
-    eventsChannel.send(ChangeAction.End)
-    eventsChannel.close()
+    mls.stop()
 
     return@coroutineScope impls
 }

@@ -1,13 +1,10 @@
 package utils
 
-import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.launch
 
 class MultipleLineStatus(
     private val data: MutableList<Line>,
@@ -29,40 +26,23 @@ class MultipleLineStatus(
     private val escapeChar = "\u001b"
 
     private var tick = 0
+
+    private lateinit var renderJob: Job
+
     suspend fun start() = coroutineScope {
-        // TODO(): Actually, some part of it should be non-cancellable.
-        //  At some situations coroutine is stopped BEFORE new ChangeAction is handled
-        val job = launch {
-            while (true) {
-                data.forEach { line ->
-                    print("\r")
-                    when (line.status) {
-                        is Status.Spinner -> {
-                            print(SpinnerSymbols.FRAMES[tick])
-                        }
-
-                        is Status.Success -> {
-                            print(line.status.sign)
-                        }
-
-                        is Status.Error -> {
-                            print(line.status.sign)
-                        }
-                    }
-                    print(" ")
-                    println(line.text)
+        renderJob = launch {
+            try {
+                while (true) {
+                    renderFrame()
                 }
-                tick = (tick + 1) % SpinnerSymbols.FRAMES.size
-                delay(delay)
-                print(escapeChar + "[${data.size}A")
+            } catch (e: CancellationException) {
+                // coroutine could be cancelled only on delay() so we should shift cursor to write over previous frame
+                consoleCursorUpFor(data.size)
+                renderFrame()
             }
         }
         eventChannel.receiveAsFlow().onEach { e ->
             when (e) {
-                is ChangeAction.End -> {
-                    job.cancelAndJoin()
-                }
-
                 is ChangeAction.ChangeStatus -> {
                     data[e.lineIndex] = data[e.lineIndex].copy(status = e.newStatus)
                 }
@@ -72,6 +52,39 @@ class MultipleLineStatus(
                 }
             }
         }.collect()
+    }
+
+    suspend fun stop() {
+        renderJob.cancelAndJoin()
+        eventChannel.close()
+    }
+
+    private suspend fun renderFrame() {
+        data.forEach { line ->
+            print("\r")
+            when (line.status) {
+                is Status.Spinner -> {
+                    print(SpinnerSymbols.FRAMES[tick])
+                }
+
+                is Status.Success -> {
+                    print(line.status.sign)
+                }
+
+                is Status.Error -> {
+                    print(line.status.sign)
+                }
+            }
+            print(" ")
+            println(line.text)
+        }
+        tick = (tick + 1) % SpinnerSymbols.FRAMES.size
+        delay(delay)
+        consoleCursorUpFor(data.size)
+    }
+
+    private fun consoleCursorUpFor(i: Int) {
+        print(escapeChar + "[${i}A")
     }
 }
 
@@ -83,7 +96,6 @@ data class Line(
 sealed class ChangeAction {
     data class ChangeStatus(val lineIndex: Int, val newStatus: Status) : ChangeAction()
     data class ChangeText(val lineIndex: Int, val newText: String) : ChangeAction()
-    object End : ChangeAction()
 }
 
 sealed class Status {
