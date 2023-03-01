@@ -9,11 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33b1220d-c217-4d46-a062-5ee946a7616c" name="Changes" comment="created and integrated fancy MultipleLineStatus engine">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/utils/MultipleLineStatus.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/utils/MultipleLineStatus.kt" afterDir="false" />
-    </list>
+    <list default="true" id="33b1220d-c217-4d46-a062-5ee946a7616c" name="Changes" comment="overcome MLS problem &#10;when last update of state didn't reflect on screen due to coroutine cancellation" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -147,7 +143,7 @@
       <workItem from="1677420321817" duration="37000" />
       <workItem from="1677425591569" duration="7785000" />
       <workItem from="1677514666433" duration="2592000" />
-      <workItem from="1677611669681" duration="859000" />
+      <workItem from="1677611669681" duration="1315000" />
     </task>
     <task id="LOCAL-00001" summary="created ConsoleTableBuilder, TargetSystem">
       <created>1677176570694</created>
@@ -177,7 +173,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677439657388</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="overcome MLS problem &#10;when last update of state didn't reflect on screen due to coroutine cancellation">
+      <created>1677612968157</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1677612968157</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,24 +214,12 @@
     <MESSAGE value="created Resource and suspendToResourceWrapper; playing around with ktor and coroutines" />
     <MESSAGE value="created `determine` subcommand; implemented check() for ConfluenceTargetImpl" />
     <MESSAGE value="created and integrated fancy MultipleLineStatus engine" />
-    <option name="LAST_COMMIT_MESSAGE" value="created and integrated fancy MultipleLineStatus engine" />
+    <MESSAGE value="overcome MLS problem &#10;when last update of state didn't reflect on screen due to coroutine cancellation" />
+    <option name="LAST_COMMIT_MESSAGE" value="overcome MLS problem &#10;when last update of state didn't reflect on screen due to coroutine cancellation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/Main.kt</url>
-          <line>91</line>
-          <properties>
-            <option name="lambda-ordinal" value="-1" />
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/Main.kt</url>
-          <line>94</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/utils/MultipleLineStatus.kt</url>
           <line>54</line>

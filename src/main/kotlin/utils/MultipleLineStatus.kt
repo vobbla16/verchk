@@ -34,6 +34,8 @@ class MultipleLineStatus(
             try {
                 while (true) {
                     renderFrame()
+                    delay(delay)
+                    consoleCursorUpFor(data.size)
                 }
             } catch (e: CancellationException) {
                 // coroutine could be cancelled only on delay() so we should shift cursor to write over previous frame
@@ -59,7 +61,7 @@ class MultipleLineStatus(
         eventChannel.close()
     }
 
-    private suspend fun renderFrame() {
+    private fun renderFrame() {
         data.forEach { line ->
             print("\r")
             when (line.status) {
@@ -79,8 +81,6 @@ class MultipleLineStatus(
             println(line.text)
         }
         tick = (tick + 1) % SpinnerSymbols.FRAMES.size
-        delay(delay)
-        consoleCursorUpFor(data.size)
     }
 
     private fun consoleCursorUpFor(i: Int) {
