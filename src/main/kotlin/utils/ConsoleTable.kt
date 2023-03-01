@@ -11,13 +11,13 @@ class ConsoleTableBuilder {
         const val TOP_RIGHT_CORNER = "╮"
         const val BOTTOM_LEFT_CORNER = "╰"
         const val BOTTOM_RIGHT_CORNER = "╯"
-        const val VERTICAL_SPLITTER = "┃"
-        const val HORIZONTAL_SPLITTER = "━"
-        const val TOP_TEE = "┷"
-        const val RIGHT_TEE = "┣"
-        const val BOTTOM_TEE = "┯"
-        const val LEFT_TEE = "┫"
-        const val FOUR_WAY = "╋"
+        const val VERTICAL_SPLITTER = "│"
+        const val HORIZONTAL_SPLITTER = "─"
+        const val TOP_TEE = "┴"
+        const val RIGHT_TEE = "├"
+        const val BOTTOM_TEE = "┬"
+        const val LEFT_TEE = "┤"
+        const val FOUR_WAY = "┼"
     }
 
     fun headers(vararg headers: String) {
