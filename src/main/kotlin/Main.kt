@@ -52,10 +52,32 @@ fun main(args: Array<String>) {
         }
     }
 
+    class DetermineSystemVersion : Subcommand("determine-version", "Determine target system's version") {
+        val url by argument(ArgType.String, "endpoint", "Url to find version of system installed on it")
+        override fun execute() {
+            val possibleSystems = runBlocking { determineTargetSystem(url) }
+            println()
+
+            val versions = runBlocking { determineVersion(possibleSystems) }
+
+            val table = consoleTable {
+                headers("#", "Target system", "Version")
+                versions.forEachIndexed { i, vers ->
+                    addRow(i.toString(), possibleSystems[i].targetName, vers)
+                }
+            }
+
+            println("Possible versions of systems possibly installed on endpoint:")
+            println(table.build())
+        }
+    }
+
+
 
     val showTargets = ShowTargets()
     val determineTargetSystem = DetermineTargetSystem()
-    parser.subcommands(showTargets, determineTargetSystem)
+    val determineSystemVersion = DetermineSystemVersion()
+    parser.subcommands(showTargets, determineTargetSystem, determineSystemVersion)
     parser.parse(args)
 }
 
@@ -92,4 +114,32 @@ suspend fun determineTargetSystem(url: String) = coroutineScope {
     mls.stop()
 
     return@coroutineScope impls
+}
+
+suspend fun determineVersion(possibleSystems: List<TargetSystem>): List<String> = coroutineScope {
+    val versions = mutableListOf<String>()
+
+    val initialLines = mutableListOf<Line>()
+    val eventsChannel = Channel<ChangeAction>()
+
+    val checkJobs = mutableListOf<Job>()
+
+    possibleSystems.forEachIndexed { i, sys ->
+        initialLines.add(Line(Status.Spinner, "Trying to find out version of ${sys.targetName}"))
+
+        checkJobs.add(launch {
+            val res = sys.version()
+            versions.add(res)
+            eventsChannel.send(ChangeAction.ChangeStatus(i, Status.Success()))
+            eventsChannel.send(ChangeAction.ChangeText(i, "Found ${sys.targetName} with version ${res}"))
+        })
+    }
+
+    val mls = MultipleLineStatus(initialLines, eventsChannel)
+    launch { mls.start() }
+    
+    checkJobs.forEach { it.join() }
+    mls.stop()
+
+    return@coroutineScope versions
 }
