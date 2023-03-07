@@ -57,6 +57,10 @@ fun main(args: Array<String>) {
         override fun execute() {
             val possibleSystems = runBlocking { determineTargetSystem(url) }
             println()
+            if(possibleSystems.size == 0) {
+                println("No known systems installed on target")
+                return
+            }
 
             val versions = runBlocking { determineVersion(possibleSystems) }
 
@@ -96,13 +100,21 @@ suspend fun determineTargetSystem(url: String) = coroutineScope {
         
         allChecksJobs.add(launch {
             val res = ins.check()
-            if (res) {
-                eventsChannel.send(ChangeAction.ChangeStatus(i, Status.Success()))
-                eventsChannel.send(ChangeAction.ChangeText(i, "Target is ${ins.targetName}"))
-                impls.add(ins)
-            } else {
-                eventsChannel.send(ChangeAction.ChangeStatus(i, Status.Error()))
-                eventsChannel.send(ChangeAction.ChangeText(i, "Target is not ${ins.targetName}"))
+            when(res) {
+                is Resource.Success -> {
+                    if (res.data) {
+                        eventsChannel.send(ChangeAction.ChangeStatus(i, Status.Success()))
+                        eventsChannel.send(ChangeAction.ChangeText(i, "Target is ${ins.targetName}"))
+                        impls.add(ins)
+                    } else {
+                        eventsChannel.send(ChangeAction.ChangeStatus(i, Status.Error()))
+                        eventsChannel.send(ChangeAction.ChangeText(i, "Target is not ${ins.targetName}"))
+                    }
+                }
+                is Resource.Error -> {
+                    eventsChannel.send(ChangeAction.ChangeStatus(i, Status.Error()))
+                    eventsChannel.send(ChangeAction.ChangeText(i, "Error: ${res.message}"))
+                }
             }
         })
     }
@@ -129,9 +141,17 @@ suspend fun determineVersion(possibleSystems: List<TargetSystem>): List<String> 
 
         checkJobs.add(launch {
             val res = sys.version()
-            versions.add(res)
-            eventsChannel.send(ChangeAction.ChangeStatus(i, Status.Success()))
-            eventsChannel.send(ChangeAction.ChangeText(i, "Found ${sys.targetName} with version ${res}"))
+            when(res) {
+                is Resource.Success -> {
+                    versions.add(res.data)
+                    eventsChannel.send(ChangeAction.ChangeStatus(i, Status.Success()))
+                    eventsChannel.send(ChangeAction.ChangeText(i, "Found ${sys.targetName} with version ${res.data}"))
+                }
+                is Resource.Error -> {
+                    eventsChannel.send(ChangeAction.ChangeStatus(i, Status.Error()))
+                    eventsChannel.send(ChangeAction.ChangeText(i, "Error: ${res.message}"))
+                }
+            }
         })
     }
 
